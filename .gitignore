@@ -1,3 +1,4 @@
-# files which do not need to include
+# files which do not need to be included
 .idea
 /cmake-build-debug/
+/CMakeLists.txt
