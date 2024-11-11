@@ -6,4 +6,4 @@ set(CMAKE_CXX_STANDARD 20)
 include_directories(Graphs)
 
 add_executable(AlgoTemplates
-        Graphs/Flows/FordFalkerson.cpp)
+        Graphs/Flows/EdmondsCarpScalling.cpp)
