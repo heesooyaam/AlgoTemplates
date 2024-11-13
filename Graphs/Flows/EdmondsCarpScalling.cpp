@@ -31,7 +31,7 @@ void clear(queue<T>& q) {
     }
 }
 
-ll bfs(vector<unordered_map<int, ll>>& g, const int start, const int end, const ull border) {
+ll edmonds_carp(vector<unordered_map<int, ll>>& g, const int start, const int end, const ull border) {
     queue<TState> q;
     vector<int> used(g.size());
     vector<int> prev(g.size());
@@ -88,11 +88,11 @@ ll bfs(vector<unordered_map<int, ll>>& g, const int start, const int end, const 
     return F;
 }
 
-ll scalling(vector<unordered_map<int, ll>>& g, const int start, const int end, const ull maxFlow) {
+ll scaling(vector<unordered_map<int, ll>>& g, const int start, const int end, const ull maxFlow) {
     ull border = max(bit_floor(maxFlow), 1ull);
     ll F = 0;
     while (border) {
-        F += bfs(g, start, end, border);
+        F += edmonds_carp(g, start, end, border);
         border >>= 1;
     }
 
@@ -110,7 +110,7 @@ void solve() {
         g[to][from] = c; // if graph is undirected
     }
 
-    cout << scalling(g, 1, n, 1ull * n * n * (ull) 1e9 + 20) << endl;
+    cout << scaling(g, 1, n, (ull) 1e9 + 20) << endl;
 }
 
 int32_t main() {

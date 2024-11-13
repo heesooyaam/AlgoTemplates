@@ -31,7 +31,7 @@ void clear(queue<T>& q) {
     }
 }
 
-ll bfs(vector<unordered_map<int, ll>>& g, const int start, const int end) {
+ll edmonds_carp(vector<unordered_map<int, ll>>& g, const int start, const int end) {
     queue<TState> q;
     vector<int> used(g.size());
     vector<int> prev(g.size());
@@ -99,7 +99,7 @@ void solve() {
         g[to][from] = c; // if graph is undirected
     }
 
-    cout << bfs(g, 1, n) << endl;
+    cout << edmonds_carp(g, 1, n) << endl;
 }
 
 int32_t main() {

@@ -39,6 +39,22 @@ ll dfs(vector<unordered_map<int, ll>>& g, vector<int>& used, int cur, ll mnD, co
     }
     return 0;
 }
+
+ll ford_falkerson(vector<unordered_map<int, ll>>& g, const int start, const int end) {
+    const int n = g.size() - 1;
+
+    vector<int> used(n + 1);
+    int curColor = 1;
+
+    ll F = 0;
+    while (ll delta = dfs(g, used, 1, INF, curColor)) {
+        ++curColor;
+        F += delta;
+    }
+
+    return F;
+}
+
 void solve() {
     int n, m;
     cin >> n >> m;
@@ -50,15 +66,7 @@ void solve() {
         g[to][from] = c; // if graph is undirected
     }
 
-    vector<int> used(n + 1);
-    int curColor = 1;
-    ll F = 0;
-    while (ll delta = dfs(g, used, 1, numeric_limits<ll>::max(), curColor)) {
-        ++curColor;
-        F += delta;
-    }
-    cout << F << endl;
-
+    cout << ford_falkerson(g, 1, n) << endl;
 }
 int32_t main() {
     // freopen("input.txt", "r", stdin);
