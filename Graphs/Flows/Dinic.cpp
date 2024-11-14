@@ -69,13 +69,13 @@ ll dinic(vector<vector<ll>>& g, const int start, const int end) {
     vector<int> d(n + 1);
     vector<int> ptr(n + 1);
     while (true) {
-        if (!bfs(g, d, 1, n)) break;
+        if (!bfs(g, d, start, end)) break;
 
         for (auto &i: ptr) {
             i = 1;
         }
 
-        while (ll delta = dfs(g, ptr, d, 1, INF, n)) {
+        while (ll delta = dfs(g, ptr, d, start, INF, end)) {
             F += delta;
         }
     }
