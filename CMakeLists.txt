@@ -6,4 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 include_directories(Graphs)
 
 add_executable(AlgoTemplates
-        Graphs/Flows/Dinic.cpp)
+#        Graphs/ShortestPathes/FordBellman.cpp
+        Graphs/Flows/MCMF/JhonsonPotentials.cpp
+#                Graphs/ShortestPathes/Dijkstra.cpp
+)
