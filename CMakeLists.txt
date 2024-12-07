@@ -4,9 +4,15 @@ project(AlgoTemplates)
 set(CMAKE_CXX_STANDARD 20)
 
 include_directories(Graphs)
-
 add_executable(AlgoTemplates
-#        Graphs/ShortestPathes/FordBellman.cpp
-        Graphs/Flows/MCMF/JhonsonPotentials.cpp
-#                Graphs/ShortestPathes/Dijkstra.cpp
+#        Graphs/ShortestPathes/FordBellman/FordBellmanFractional.cpp
+#        Graphs/Flows/MCMF/Matrix/JhonsonPotentialsInteger.cpp
+#        Graphs/Flows/MCMF/List/JhonsonPotentialsOnList.cpp
+#        Graphs/ShortestPathes/Dijkstra/DijkstraInteger.cpp
+#        Graphs/ShortestPathes/Dijkstra/DijkstraFractional.cpp
+#        Graphs/Flows/MCMF/Matrix/JhonsonPotentialsInteger.cpp
+#        Graphs/Flows/MCMF/Matrix/JhonsonPotentialsFractional.cpp
+#        Graphs/Flows/MCMF/Matrix/JhonsonPotentialsInteger.cpp
+#        Graphs/Flows/MCMF/List/JhonsonPotentialsInteger.cpp
+        Graphs/Flows/MCMF/List/JhonsonPotentialsFractional.cpp
 )
