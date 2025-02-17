@@ -16,34 +16,36 @@ using ld = long double;
 #define INF numeric_limits<ll>::max()
 #define print(x); for(auto& val : x){cout << val << ' ';}cout << endl;
 #define input(x); for(auto& val : x){cin >> val;}
+#define input1(x); for (int i_ = 1; i_ < (x).size(); ++i_) { cin >> (x)[i_]; }
 #define make_unique(x) sort(all((x))); (x).resize(unique(all((x))) - (x).begin())
 #define endl '\n'
 
-class MinTree {
+template<typename T = int>
+class PersMinTree {
 public:
     struct Node {
-        int mn = inf;
+        T mn = numeric_limits<T>::max();
         int l = 0, r = 0;
     };
 
-    explicit MinTree(int sz) : n(sz) {
+    explicit PersMinTree(int sz) : n(sz) {
         versions.eb();
     }
 
-    int update(int pos, int val, int version) {
+    int update(int pos, T val, int version) {
         return update(version, pos, val, 0, n);
     }
 
-    int get(int l, int r, int version) {
+    T get(int l, int r, int version) {
         return get(version, l, r, 0, n);
     }
 private:
     const int n;
     vector<Node> versions;
 
-    int get(int v, int l, int r, int curL, int curR) {
+    T get(int v, int l, int r, int curL, int curR) {
         if (l >= r) {
-            return inf;
+            return numeric_limits<T>::max();
         }
 
         if (curL == l && curR == r) {
@@ -52,18 +54,13 @@ private:
 
         int mid = (curL + curR) >> 1;
 
-        int mn_l = versions[v].l ? get(versions[v].l, l, min(mid, r), curL, mid) : inf;
-        int mn_r = versions[v].r ? get(versions[v].r, max(l, mid), r, mid, curR) : inf;
+        T mn_l = versions[v].l ? get(versions[v].l, l, min(mid, r), curL, mid) : numeric_limits<T>::max();
+        T mn_r = versions[v].r ? get(versions[v].r, max(l, mid), r, mid, curR) : numeric_limits<T>::max();
 
         return min(mn_l, mn_r);
     }
 
-    int update(int v, int pos, int val, int curL, int curR) {
-        if (!v) { // от неявного ДО
-            versions.eb();
-            v = versions.size() - 1;
-        }
-
+    int update(int v, int pos, T val, int curL, int curR) {
         if (curL + 1 == curR) {
             versions.eb(val, 0, 0);
             return versions.size() - 1;
@@ -87,29 +84,82 @@ private:
     }
 };
 
+// tested on: https://codeforces.com/contest/893/problem/F
 void solve() {
-    int n, m;
-    cin >> n >> m;
-    MinTree ST(n);
-    int last = 0;
-    for (int i = 0; i < n; ++i) {
-        int x;
-        cin >> x;
-        last = ST.update(i, x, last);
+    int n, r;
+    cin >> n >> r;
+    vector<int> a(n + 1);
+    input1(a);
+
+    vector<vector<int>> g(n + 1);
+    for (int i = 0; i < n - 1; ++i) {
+        int u, v;
+        cin >> u >> v;
+        g[u].eb(v);
+        g[v].eb(u);
     }
 
-    for (int i = 0; i < m; ++i) {
-        int q;
-        cin >> q;
-        if (q == 1) {
-            int pos, x;
-            cin >> pos >> x;
-            last = ST.update(pos, x, last);
-        } else {
-            int l, r;
-            cin >> l >> r;
-            cout << ST.get(l, r, last) << endl;
+    int time = 0;
+    vector<int> tin(n + 1), tout(n + 1), euler;
+    euler.reserve(n);
+
+    auto dfs = [&g, &tin, &tout, &time, &euler](auto&& dfs, int cur, int prev = -1) -> void {
+        euler.eb(cur);
+        tin[cur] = time;
+
+        for (auto& nxt : g[cur]) {
+            if (nxt == prev) continue;
+
+            ++time;
+            dfs(dfs, nxt, cur);
         }
+
+        tout[cur] = time;
+    };
+    dfs(dfs, r);
+
+    PersMinTree ST(n);
+    assert(euler.size() == n);
+    vector<int> versions;
+    versions.reserve(n);
+
+    vector<int> h(n + 1, -1);
+
+    queue<int> q;
+    q.push(r);
+    h[r] = 0;
+    int prev = 0;
+    int last_v = 0;
+    while (!q.empty()) {
+        int cur = q.front();
+        q.pop();
+
+        if (h[cur] == prev + 1) {
+            versions.eb(last_v);
+        }
+
+        last_v = ST.update(tin[cur], a[cur], last_v);
+        prev = h[cur];
+
+        for (const auto to : g[cur]) {
+            if (h[to] != -1) continue;
+
+            h[to] = h[cur] + 1;
+            q.push(to);
+        }
+    }
+    versions.eb(last_v);
+
+    int m;
+    cin >> m;
+    int last = 0;
+    while (m--) {
+        int p, q_;
+        cin >> p >> q_;
+        int x = (p + last) % n + 1, k = (q_ + last) % n;
+        int v = versions[min(h[x] + k, (int) versions.size() - 1)];
+        last = ST.get(tin[x], tout[x] + 1, v);
+        cout << last << endl;
     }
 }
 

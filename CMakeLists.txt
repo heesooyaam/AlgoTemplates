@@ -14,5 +14,6 @@ add_executable(AlgoTemplates
 #        Graphs/Flows/MCMF/Matrix/JhonsonPotentialsFractional.cpp
 #        Graphs/Flows/MCMF/Matrix/JhonsonPotentialsInteger.cpp
 #        Graphs/Flows/MCMF/List/JhonsonPotentialsInteger.cpp
-        Graphs/Flows/MCMF/List/JhonsonPotentialsFractional.cpp
+#        Graphs/Flows/MCMF/List/JhonsonPotentialsFractional.cpp
+        Structures/Trees/SegTrees/Persistent/Min.cpp
 )
