@@ -85,6 +85,7 @@ private:
 };
 
 // tested on: https://codeforces.com/contest/893/problem/F
+
 void solve() {
     int n, r;
     cin >> n >> r;
