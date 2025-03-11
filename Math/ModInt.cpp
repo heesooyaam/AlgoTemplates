@@ -72,6 +72,18 @@ public:
         this->data = by_modulo(1ll * this->data + integer);
         return *this;
     }
+    template<typename Integer>
+    typename std::enable_if_t<std::is_integral<Integer>::value, ModInt>&
+    operator++() {
+        return *this += 1;
+    }
+    template<typename Integer>
+    typename std::enable_if_t<std::is_integral<Integer>::value, ModInt>
+    operator++(int) {
+        ModInt<MOD> tmp = *this;
+        *this += 1;
+        return tmp;
+    }
 
     template<typename Integer>
     typename std::enable_if_t<std::is_integral<Integer>::value, ModInt>
@@ -83,6 +95,18 @@ public:
     operator-=(const Integer integer) {
         this->data = by_modulo(1ll * this->data - integer);
         return *this;
+    }
+    template<typename Integer>
+    typename std::enable_if_t<std::is_integral<Integer>::value, ModInt>&
+    operator--() {
+        return *this -= 1;
+    }
+    template<typename Integer>
+    typename std::enable_if_t<std::is_integral<Integer>::value, ModInt>
+    operator--(int) {
+        ModInt<MOD> tmp = *this;
+        *this -= 1;
+        return tmp;
     }
 
     ModInt operator+(const ModInt<MOD> other) const {
@@ -119,7 +143,7 @@ public:
     }
 
     template<typename UInteger>
-    typename std::enable_if_t<std::is_unsigned<UInteger>::value, ModInt>
+    typename std::enable_if_t<std::is_integral<UInteger>::value, ModInt>
     operator^(UInteger power) const {
         ModInt<MOD> cur = *this, res = 1;
         while (power) {
@@ -135,7 +159,7 @@ public:
     }
 
     template<typename UInteger>
-    typename std::enable_if_t<std::is_unsigned<UInteger>::value, ModInt>&
+    typename std::enable_if_t<std::is_integral<UInteger>::value, ModInt>&
     operator^=(UInteger power) {
         ModInt<MOD> res = 1;
         while (power) {
@@ -172,7 +196,9 @@ public:
     }
 
     template<typename Istream> friend Istream& operator>>(Istream& istream, ModInt& arg) {
-        return istream >> arg.data;
+        istream >> arg.data;
+        arg.data = by_modulo(arg.data);
+        return istream;
     }
 };
 
