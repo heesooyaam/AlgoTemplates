@@ -81,7 +81,7 @@ public:
         build_sieve();
     }
 
-    // u should use it to find ALL_DIVS local
+    // u should use it to find ALL_DIVS exactly
     static int count_all_divs() {
         int cnt = 0;
         for (int i = 1; i < MAXV + 1; ++i) {

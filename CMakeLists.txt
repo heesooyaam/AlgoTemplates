@@ -19,7 +19,8 @@ add_executable(AlgoTemplates
 #        Structures/Trees/SegTrees/Persistent/Min.cpp
 #        Structures/Trees/SegTrees/Persistent/LongestSegmentOfOnes.cpp
 #        Structures/Trees/SegTrees/Persistent/Sum.cpp
-        Math/ModInt.cpp
-        Math/DivisorsSieve.cpp
-        Math/FastGcdLcm.cpp
+#        Math/ModInt.cpp
+#        Math/DivisorsSieve.cpp
+#        Math/FastGcdLcm.cpp
+        Math/FactorizationSieve.cpp
 )
