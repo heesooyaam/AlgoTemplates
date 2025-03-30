@@ -16,11 +16,13 @@ add_executable(AlgoTemplates
 #        Graphs/Flows/MCMF/Matrix/JhonsonPotentialsInteger.cpp
 #        Graphs/Flows/MCMF/List/JhonsonPotentialsInteger.cpp
 #        Graphs/Flows/MCMF/List/JhonsonPotentialsFractional.cpp
-#        Structures/Trees/SegTrees/Persistent/Min.cpp
-#        Structures/Trees/SegTrees/Persistent/LongestSegmentOfOnes.cpp
-#        Structures/Trees/SegTrees/Persistent/Sum.cpp
+#        Structures/Trees/Segment/Persistent/Min.cpp
+#        Structures/Trees/Segment/Persistent/LongestSegmentOfOnes.cpp
+#        Structures/Trees/Segment/Persistent/Sum.cpp
 #        Math/ModInt.cpp
 #        Math/DivisorsSieve.cpp
 #        Math/FastGcdLcm.cpp
-        Math/FactorizationSieve.cpp
+#        Math/FactorizationSieve.cpp
+#        Structures/Trees/Splay/ImplicitSplayTreeBase.cpp
+        Structures/Trees/Splay/ImplicitSplayTreeWithLazyOperations.cpp
 )

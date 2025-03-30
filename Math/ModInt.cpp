@@ -38,7 +38,7 @@ public:
     ModInt() : data(0) {}
     ModInt(const ModInt<MOD>& other) : data(other.data) {}
     ModInt& operator=(const ModInt<MOD> other) {
-        data = other.data;
+        this->data = other.data;
         return *this;
     }
 
@@ -72,14 +72,10 @@ public:
         this->data = by_modulo(1ll * this->data + integer);
         return *this;
     }
-    template<typename Integer>
-    typename std::enable_if_t<std::is_integral<Integer>::value, ModInt>&
-    operator++() {
+    ModInt& operator++() {
         return *this += 1;
     }
-    template<typename Integer>
-    typename std::enable_if_t<std::is_integral<Integer>::value, ModInt>
-    operator++(int) {
+    ModInt operator++(int) {
         ModInt<MOD> tmp = *this;
         *this += 1;
         return tmp;
@@ -96,14 +92,10 @@ public:
         this->data = by_modulo(1ll * data - integer);
         return *this;
     }
-    template<typename Integer>
-    typename std::enable_if_t<std::is_integral<Integer>::value, ModInt>&
-    operator--() {
+    ModInt& operator--() {
         return *this -= 1;
     }
-    template<typename Integer>
-    typename std::enable_if_t<std::is_integral<Integer>::value, ModInt>
-    operator--(int) {
+    ModInt operator--(int) {
         ModInt<MOD> tmp = *this;
         *this -= 1;
         return tmp;
@@ -131,7 +123,7 @@ public:
     template<typename Integer>
     typename std::enable_if_t<std::is_integral<Integer>::value, ModInt>&
     operator*=(const Integer integer) {
-        data = by_modulo(1ll * data * integer);
+        this->data = by_modulo(1ll * data * integer);
         return *this;
     }
 

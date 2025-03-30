@@ -21,7 +21,7 @@ using ld = long double;
 #define make_unique(x) sort(all((x))); (x).resize(unique(all((x))) - (x).begin())
 #define endl '\n'
 
-template<const int MAXV, const int ALL_PRIMES = 3 * (int) log(MAXV)>
+template<const int MAXV, const int ALL_PRIMES =  (int) (1.2 * MAXV / log(MAXV))>
 class factorization_sieve_t {
 private:
     array<int, ALL_PRIMES> primes;
@@ -32,7 +32,8 @@ private:
         min_prime_divisor[1] = 1;
         for (int i = 2; i < MAXV + 1; ++i) {
             if (!min_prime_divisor[i]) {
-                primes[++last_prime] = min_prime_divisor[i] = i;
+                assert(++last_prime < ALL_PRIMES);
+                primes[last_prime] = min_prime_divisor[i] = i;
             }
 
             // k = min_p_div[k] * i => for every i let's look at primes, which are less than min_p_div[i].
@@ -89,6 +90,29 @@ public:
         return min_prime_divisor[x];
     }
 
+    // returns vector of { {a prime number, power of the prime number} } in inc order
+    vector<pair<int, int>> get_factorization_as_pairs(int x) {
+        vector<pair<int, int>> factorization;
+        while (x != 1) {
+            const int mpd = get_min_prime_divisor(x);
+            if (factorization.empty() || factorization.back().first == mpd) {
+                ++factorization.back().second;
+            } else {
+                factorization.eb(mpd, 1);
+            }
+
+            x /= mpd;
+        }
+
+        return factorization;
+    }
+
+    // returns dict of { {key: a prime number, value: power of the prime number} }
+    template<typename T = map<int, int>>
+    T get_factorization_as_dict(int x) {
+        return map<int, int>(get_factorization_as_pairs(x));
+    }
+
     const array<int, ALL_PRIMES>& get_all_primes() const {
         return primes;
     }
@@ -98,10 +122,32 @@ public:
     }
 };
 
-const int ALL_PRIMES = 78498;
+const int MAXN = 10'000'000;
+factorization_sieve_t<MAXN> sieve;
+
+// tested on: https://codeforces.com/problemset/problem/1823/C
+
 void solve() {
-    factorization_sieve_t<(int) 1e6, ALL_PRIMES> sieve;
-    cout << sieve.get_all_primes().size() << endl;
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    input(a);
+
+    map<int, int> cnt_divs;
+    for (auto x : a) {
+        for (auto [d, cnt_d] : sieve.get_factorization_as_pairs(x)) {
+            cnt_divs[d] += cnt_d;
+        }
+    }
+
+    ll ans = 0;
+    ll free = 0;
+    for (auto& [d, amt] : cnt_divs) {
+        ans += amt / 2;
+        free += amt & 1;
+    }
+    ans += free / 3;
+    cout << ans << endl;
 }
 
 int32_t main() {
