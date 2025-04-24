@@ -24,5 +24,9 @@ add_executable(AlgoTemplates
 #        Math/FastGcdLcm.cpp
 #        Math/FactorizationSieve.cpp
 #        Structures/Trees/Splay/ImplicitSplayTreeBase.cpp
-        Structures/Trees/Splay/ImplicitSplayTreeWithLazyOperations.cpp
+#        Structures/Trees/Splay/ImplicitSplayTreeWithLazyOperations.cpp
+#        Structures/Trees/Segment/Default/MaxAdd.cpp
+#        Structures/Trees/Segment/Default/MaxAddWithPos.cpp
+        Structures/Trees/Segment/Default/Template.cpp
+        #        Structures/Trees/Segment/Default/MaxAddWithPos2.cpp
 )
