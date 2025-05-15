@@ -27,6 +27,7 @@ add_executable(AlgoTemplates
 #        Structures/Trees/Splay/ImplicitSplayTreeWithLazyOperations.cpp
 #        Structures/Trees/Segment/Default/MaxAdd.cpp
 #        Structures/Trees/Segment/Default/MaxAddWithPos.cpp
-        Structures/Trees/Segment/Default/Template.cpp
+#        Structures/Trees/Segment/Default/Template.cpp
+        Strings/hash.cpp
         #        Structures/Trees/Segment/Default/MaxAddWithPos2.cpp
 )

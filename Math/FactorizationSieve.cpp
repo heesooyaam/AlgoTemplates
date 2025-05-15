@@ -95,10 +95,10 @@ public:
         vector<pair<int, int>> factorization;
         while (x != 1) {
             const int mpd = get_min_prime_divisor(x);
-            if (factorization.empty() || factorization.back().first == mpd) {
-                ++factorization.back().second;
-            } else {
+            if (factorization.empty() || factorization.back().first != mpd) {
                 factorization.eb(mpd, 1);
+            } else {
+                ++factorization.back().second;
             }
 
             x /= mpd;
@@ -110,7 +110,11 @@ public:
     // returns dict of { {key: a prime number, value: power of the prime number} }
     template<typename T = map<int, int>>
     T get_factorization_as_dict(int x) {
-        return map<int, int>(get_factorization_as_pairs(x));
+        T ret;
+        for (auto &[factor, cnt] : get_factorization_as_pairs(x)) {
+            ret[factor] = cnt;
+        }
+        return ret;
     }
 
     const array<int, ALL_PRIMES>& get_all_primes() const {
