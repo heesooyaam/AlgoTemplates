@@ -139,7 +139,7 @@ void solve() {
 
     map<int, int> cnt_divs;
     for (auto x : a) {
-        for (auto [d, cnt_d] : sieve.get_factorization_as_pairs(x)) {
+        for (auto [d, cnt_d] : sieve.get_factorization_as_dict(x)) {
             cnt_divs[d] += cnt_d;
         }
     }
